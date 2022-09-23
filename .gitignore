@@ -1,0 +1,4 @@
+/target
+key.txt
+.env
+*.todo
