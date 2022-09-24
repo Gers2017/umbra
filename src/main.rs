@@ -1,4 +1,5 @@
 use clap::{Parser, Subcommand};
+use dotenv::dotenv;
 use zenode::Operator;
 
 #[derive(Parser)]
@@ -56,6 +57,7 @@ enum Commands {
 async fn main() -> Result<(), String> {
     use Commands::*;
     let cli = Cli::parse();
+    dotenv().ok();
     let op = Operator::default();
 
     if let Some(ref command) = cli.command {

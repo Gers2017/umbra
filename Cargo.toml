@@ -15,3 +15,4 @@ publish = false
 zenode = "0.2.0"
 tokio = { version = "1.21.1", features = ["rt", "rt-multi-thread", "macros"] }
 clap = { version = "3.2.22",  features = ["derive", "cargo"] }
+dotenv = "0.15.0"
