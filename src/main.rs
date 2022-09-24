@@ -11,7 +11,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Creates an schema, requires name, description and fields
+    /// Creates a schema, requires name, description and fields
     CreateSchema {
         #[clap(short = 'n', long, value_parser)]
         name: String,
@@ -30,7 +30,7 @@ enum Commands {
         #[clap(short = 'f', long, value_parser)]
         fields: Vec<String>,
     },
-    /// Updates a schema instance, requires schema_id, view_id (instance document_id if is new), and fields to update
+    /// Updates a schema instance, requires schema_id, view_id, and fields to update
     UpdateInstance {
         /// schema_id in the shape: <schema-name>_0020cae3b
         #[clap(short = 's', long, value_parser)]
@@ -42,7 +42,7 @@ enum Commands {
         #[clap(short = 'f', long, value_parser)]
         fields: Vec<String>,
     },
-    /// Deletes a schema instance, requires schema_id, last view_id (instance document_id if is new)
+    /// Deletes a schema instance, requires schema_id, last view_id
     DeleteInstance {
         /// schema_id in the shape: <schema-name>_0020cae3b
         #[clap(short = 's', long, value_parser)]
