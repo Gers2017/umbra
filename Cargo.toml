@@ -3,7 +3,7 @@ name = "umbra"
 version = "0.1.0"
 edition = "2021"
 author = "Gers2017"
-description = "cli to send p2panda operations to a node"
+description = "cli to send operations to a p2panda node"
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/Gers2017/umbra"
@@ -14,5 +14,6 @@ publish = false
 [dependencies]
 zenode = "0.2.0"
 tokio = { version = "1.21.1", features = ["rt", "rt-multi-thread", "macros"] }
-clap = { version = "3.2.22",  features = ["derive", "cargo"] }
+clap = { version = "4.0.7",  features = ["derive", "cargo"] }
 dotenv = "0.15.0"
+owo-colors = "3.5.0"
