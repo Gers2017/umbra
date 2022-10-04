@@ -1,6 +1,6 @@
 [package]
 name = "umbra"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 author = "Gers2017"
 description = "cli to send operations to a p2panda node"
