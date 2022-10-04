@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 use dotenv::dotenv;
 use owo_colors::OwoColorize;
-use zenode::{Operator, StrTuple};
+use zenode::{Operator, StringTuple};
 
 #[derive(Parser)]
 #[clap(author, version, about, long_about = None)]
@@ -87,7 +87,7 @@ async fn main() -> Result<(), String> {
                 fields,
                 log,
             } => {
-                let mut fields = map_to_str_fields(fields);
+                let mut fields = map_to_string_tuple(fields);
                 if *log {
                     print_create_schema(name, description, &fields);
                 }
@@ -100,7 +100,7 @@ async fn main() -> Result<(), String> {
                 fields,
                 log,
             } => {
-                let mut fields = map_to_str_fields(fields);
+                let mut fields = map_to_string_tuple(fields);
                 if *log {
                     print_create_instance(schema_id, &fields);
                 }
@@ -114,7 +114,7 @@ async fn main() -> Result<(), String> {
                 fields,
                 log,
             } => {
-                let mut fields = map_to_str_fields(fields);
+                let mut fields = map_to_string_tuple(fields);
                 if *log {
                     print_update_instance(schema_id, view_id, &fields);
                 }
@@ -140,22 +140,24 @@ async fn main() -> Result<(), String> {
     Ok(())
 }
 
-/// Utility functions to map cli fields to Operator fields
-/// maps `"name:str"` -> `("name", "str")`
-fn map_to_str_fields(fields: &[String]) -> Vec<(&'_ str, &'_ str)> {
-    let x = fields
+/// Utility function to map fields to Operator fields
+///
+/// For every item in `fields` maps `String` to `StringTuple` splitting by `':'` once.
+///
+/// Example: `"name:str"` to `("name", "str")`
+fn map_to_string_tuple(fields: &[String]) -> Vec<StringTuple> {
+    fields
         .iter()
-        .map(|it| -> (&str, &str) {
+        .map(|it| {
             let (a, b) = it
                 .split_once(':')
                 .expect("Missing delimiter ':' in field\nExpected field shape `a:b`. Got: {:?}");
-            (a.trim(), b.trim())
+            (a.trim().to_string(), b.trim().to_string())
         })
-        .collect::<Vec<_>>();
-    x
+        .collect::<Vec<_>>()
 }
 
-fn print_create_schema(name: &str, description: &str, fields: &Vec<StrTuple<'_>>) {
+fn print_create_schema(name: &str, description: &str, fields: &[StringTuple]) {
     println!("Creating schema...");
     println!(
         "name: {}\ndescription: {}",
@@ -167,14 +169,14 @@ fn print_create_schema(name: &str, description: &str, fields: &Vec<StrTuple<'_>>
     println!();
 }
 
-fn print_create_instance(schema_id: &str, fields: &Vec<StrTuple<'_>>) {
+fn print_create_instance(schema_id: &str, fields: &[StringTuple]) {
     println!("Creating instance...");
     println!("schema_id: {}", schema_id.magenta(),);
     print_fields(fields);
     println!();
 }
 
-fn print_update_instance(schema_id: &str, view_id: &str, fields: &Vec<StrTuple<'_>>) {
+fn print_update_instance(schema_id: &str, view_id: &str, fields: &[StringTuple]) {
     println!("Updating instance...");
     println!(
         "schema_id: {}\nview_id: {}",
@@ -195,7 +197,7 @@ fn print_delete_instance(schema_id: &str, view_id: &str) {
     println!();
 }
 
-fn print_fields(fields: &Vec<StrTuple<'_>>) {
+fn print_fields(fields: &[StringTuple]) {
     print!("fields: ");
     fields.iter().cloned().enumerate().for_each(|(i, (a, b))| {
         print!("{}: {}", a.cyan(), b.bright_green());

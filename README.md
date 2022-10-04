@@ -1,23 +1,22 @@
 # Umbra
 
-Cli powered by [zenode](https://github.com/Gers2017/zenode) to send p2panda operations to a node
+Cli powered by [zenode](https://github.com/Gers2017/zenode) to send operations to a p2panda node
 
 ## Quick start
 
 ```
-USAGE:
-    umbra [SUBCOMMAND]
+Usage: umbra [COMMAND]
 
-OPTIONS:
-    -h, --help       Print help information
-    -V, --version    Print version information
+Commands:
+  cs    Create schema, requires name, description and fields
+  ci    Create instance, requires schema_id and fields
+  ui    Update instance, requires schema_id, view_id, and fields to update
+  di    Delete instance, requires schema_id, last view_id
+  help  Print this message or the help of the given subcommand(s)
 
-SUBCOMMANDS:
-    create-instance    Creates a schema instance, requires schema_id and fields
-    create-schema      Creates a schema, requires name, description and fields
-    delete-instance    Deletes a schema instance, requires schema_id, last view_id
-    help               Print this message or the help of the given subcommand(s)
-    update-instance    Updates a schema instance, requires schema_id, view_id, and fields to update
+Options:
+  -h, --help     Print help information
+  -V, --version  Print version information
 ```
 
 ## Clone and run [aquadoggo](https://github.com/p2panda/aquadoggo)
@@ -32,32 +31,37 @@ and run aquadoggo
 RUST_LOG=aquadoggo=info cargo run
 ```
 
+## Examples
+
 ### Create a schema
 
-```
-umbra create-schema -n <schema-name> -d <schema-description> -f <field-name>:<field-type>
+```sh
+umbra cs -n <schema-name> -d <schema-description> -f <field-name>:<field-type>
+
 ```
 
 For example:
 
+```sh
+umbra cs -n bears -d 'cute bears' -f id:int -f name:str -f hidden:bool --log
 ```
-umbra create-schema -n bears -d 'cute bears' -f id:int -f name:str -f hidden:bool
-```
+
+> Pro tip: Use the --log or -l flag to print your operation with shiny colors 🤫
 
 ### Create an instance
 
-```
-umbra create-instance -s <schema_id> -f id:1 -f name:Bob -f hidden:false
+```sh
+umbra ci -s <schema_id> -f id:1 -f name:Bob -f hidden:false
 ```
 
 ### Update an instance
 
-```
-umbra update-instance -s <schema_id> -v <view_id> -f id:2 -f name:Yogi
+```sh
+umbra ui -s <schema_id> -v <view_id> -f id:2 -f name:Yogi
 ```
 
 ### Delete an instance
 
-```
-umbra delete-instance -s <schema_id> -v <view_id>
+```sh
+umbra di -s <schema_id> -v <view_id>
 ```

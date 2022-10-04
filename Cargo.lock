@@ -1725,9 +1725,9 @@ dependencies = [
 
 [[package]]
 name = "zenode"
-version = "0.2.0"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0c1cd1514088263b0fd6765439ed0ea828d29bf58c78a5e3b8dcaf79c46ff561"
+checksum = "7dcacd9777c9d7c7a312ab4990f076b934597a25ef50832735dcb81056a8fdf7"
 dependencies = [
  "gql_client",
  "hex",
